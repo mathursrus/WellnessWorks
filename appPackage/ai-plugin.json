@@ -1,0 +1,70 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.2/schema.json",
+    "schema_version": "v2.2",
+    "name_for_human": "WellnessWorks",
+    "description_for_human": "Self care tracking, recommendations, sharing.",
+    "namespace": "wellnessworks",
+    "functions": [
+        {
+            "name": "getpercentiles",
+            "description": "Get self care data for the best users. Set the item parameter to 99 for comparison against the best users and at 50 for comparison to median or average users."
+        },
+        {
+            "name": "getRecommendations",
+            "description": "Get all the recommendations of type mental (1), physical (2), spiritual (3) or social (4) for the current user. Recommendations are alternately called self care circles or habits. Users who are interested in that habit sign up as participants."
+        },
+        {
+            "name": "getselfcarestats",
+            "description": "Get self care data for a user for a given set of dates"
+        },
+        {
+            "name": "getuserfromsecretkey",
+            "description": "Get the user alias from the secret key provided by the user. This is the alias aka email address that should be used for all API calls that need user information."
+        },
+        {
+            "name": "getusergoals",
+            "description": "Get the self care goals for the user. These represent the outcomes the user wants to achieve (aka the Identity they want for themselves), the Mental, Physical, Spiritual and Social goals they want to target and the habits they plan to adopt and shed to meet the goals."
+        },
+        {
+            "name": "writeselfcarewithtoken",
+            "description": "Add a self-care entry for a specific day to the user's data. Invoke this function whenever the user prompts about activities they performed. Ask user for time duration, activity performed and the day if they haven't already given that information."
+        },
+        {
+            "name": "writerecommendation",
+            "description": "Write a self-care recommendation. This can be a brand new recommendation that a user wants to add. It could also be an existing recommendation that a user wants to participate in. In the latter case, add the users email address to the participants array of the existing recommendation. A recommendation is the same thing as a self care circle or habit and is something that users can participate in to improve their self-care."
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "None"
+            },
+            "spec": {
+                "url": "apiSpecificationFile/openapi.json"
+            },
+            "run_for_functions": [
+                "getpercentiles",
+                "getRecommendations",
+                "getselfcarestats",
+                "getuserfromsecretkey",
+                "getusergoals",
+                "writeselfcarewithtoken",
+                "writerecommendation"
+            ]
+        }
+    ],
+    "capabilities": {
+        "conversation_starters": [
+            {
+                "text": "How consistent is my self care?"
+            },
+            {
+                "text": "What self care circles should i join?"
+            },
+            {
+                "text": "Add an entry for 2 hours of running yesterday."
+            }
+        ]
+    }
+}

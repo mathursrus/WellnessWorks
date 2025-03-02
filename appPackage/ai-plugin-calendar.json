@@ -1,0 +1,64 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.2/schema.json",
+    "schema_version": "v2.2",
+    "name_for_human": "Google Calendar",
+    "description_for_human": "Manage your Google Calendar events.",
+    "namespace": "wellnessworks",
+    "functions": [
+        {
+            "name": "listCalendarEvents",
+            "description": "Retrieve events from the user's Google Calendar."
+        },
+        {
+            "name": "getCalendarEventDetails",
+            "description": "Get details of a specific Google Calendar event."
+        },
+        {
+            "name": "createCalendarEvent",
+            "description": "Create a new event in the user's Google Calendar."
+        },
+        {
+            "name": "updateCalendarEvent",
+            "description": "Update an existing event in the user's Google Calendar."
+        },
+        {
+            "name": "deleteCalendarEvent",
+            "description": "Delete an event from the user's Google Calendar."
+        }
+    ],
+    "runtimes": [
+        {
+            "type": "OpenApi",
+            "auth": {
+                "type": "OAuthPluginVault",
+                "reference_id": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IyNiMjJkMzRlYy1kYjBmLTRmZGUtODBiMS1iMjZmZjViZWM4NmE="
+            },
+            "spec": {
+                "url": "apiSpecificationFile/googlecalendarapi.json"
+            },
+            "run_for_functions": [
+                "listCalendarEvents",
+                "getCalendarEventDetails",
+                "createCalendarEvent",
+                "updateCalendarEvent",
+                "deleteCalendarEvent"
+            ]
+        }
+    ],
+    "capabilities": {
+        "conversation_starters": [
+            {
+                "text": "What’s on my schedule for today?"
+            },
+            {
+                "text": "Can you add a meditation session to my calendar?"
+            },
+            {
+                "text": "Show me my upcoming meetings this week."
+            },
+            {
+                "text": "Reschedule my yoga session to 6 PM."
+            }
+        ]
+    }
+}

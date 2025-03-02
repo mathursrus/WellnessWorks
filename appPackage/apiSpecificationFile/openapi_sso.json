@@ -1,0 +1,304 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Self Care Coach",
+    "description": "Helps users get the most out of self care by analyzing their history, comparing to the best, making recommendations based on existing self care circles, and encouraging them to share their best self care habits with others by creating new circles.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://provisions-seasons-candy-maria.trycloudflare.com"
+    }
+  ],
+  "paths": {
+    "/getpercentiles": {
+      "get": {
+        "description": "Get self care data for the best users. Set the item parameter to 99 for comparison against the best users and at 50 for comparison to median or average users.",
+        "operationId": "getpercentiles",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "The percentile to compare against. Hardcode this to 99 for comparison against the best users and at 50 for comparison to median or average users.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDay",
+            "in": "query",
+            "description": "Only read data with Date equal to or greater than startDay",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDay",
+            "in": "query",
+            "description": "Only read data with Date equal to or greater than startDay",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "The category of self care - mental, physical, spiritual, social or total",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/getRecommendations": {
+      "get": {
+        "summary": "Get all the recommendations of type mental (1), physical (2), spiritual (3) or social (4) for the current user. Recommendations are alternately called self care circles or habits. Users who are interested in that habit sign up as participants.",
+        "operationId": "getRecommendations",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "The type of recommendation - mental (1), physical (2), spiritual (3) or social (4)",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "The current user ***email address***. Not the name of the user, but the email address that was obtained from the secret.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/getselfcarestats": {
+      "get": {
+        "description": "Get self care data for a user for a given set of dates",
+        "operationId": "getselfcarestats",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "The current user ***email address***. Not the name of the user, but the email address that was obtained from the secret.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDay",
+            "in": "query",
+            "description": "Only read data with Date equal to or greater than startDay",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDay",
+            "in": "query",
+            "description": "Only read data with Date equal to or greater than startDay",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "The category of self care - mental, physical, spiritual, social or total",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/getUserInfoWithToken": {
+      "get": {
+        "description": "This is the first call that ***MUST*** be made as soon as the session starts. Get the users information from the token obtained from SSO. The username field provides the email address and should be used for all other calls. The circles field provides all the self care circles the user is part of.",
+        "operationId": "getUserInfoWithToken",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/getusergoals": {
+      "get": {
+        "summary": "Get the self care goals for the user. These represent the outcomes the user wants to achieve (aka the Identity they want for themselves), the Mental, Physical, Spiritual and Social goals they want to target and the habits they plan to adopt and shed to meet the goals.",
+        "operationId": "getusergoals",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/writeselfcarewithtoken": {
+      "get": {
+        "summary": "Add a self-care entry for a specific day to the user's data.",
+        "operationId": "writeselfcarewithtoken",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item",
+            "in": "query",
+            "description": "A JSON string representing an object with the fields: name (user email alias, required), DateTime (of the activity, required), lastEdited (set the current time for this, required), mental_health_time (time spent on mental health that day, integer), mental_health_activity (mental health activities performed that day, array of strings), physical_health_time, physical_health_activity, spiritual_health_time, spiritual_health_activity, societal_health_time, societal_health_activity. Example: '{\"name\":\"user@example.com\", \"DateTime\":\"2025-02-15T12:00:00Z\", \"mental_health_time\":30, \"mental_health_activity\":[\"meditation\"]}'",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/writerecommendation": {
+      "post": {
+        "summary": "Write a self-care recommendation. This can be a brand new recommendation that a user wants to add. It could also be an existing recommendation that a user wants to participate in. In the latter case, add the users email address to the participants array of the existing recommendation. A recommendation is the same thing as a self care circle or habit and is something that users can participate in to improve their self-care.",
+        "operationId": "writerecommendation",
+        "security": [
+          {
+            "OAuth2": ["access_as_user"]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "Title of the recommendation"
+                      },
+                      "type": {
+                        "type": "integer",
+                        "description": "Type of care, 1 for mental, 2 for physical, 3 for spiritual, 4 for social"
+                      },
+                      "selfOrTogether": {
+                        "type": "string",
+                        "description": "Hardcode to DIT"
+                      },
+                      "contributor": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email address of the current user who is requesting creation of the recommendation"
+                      },
+                      "date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Optional property to carry the date of the event, if it is on a specific date. ISO format (YYYY-MM-DDTHH:MM:SSZ)"
+                      },
+                      "participants": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "description": "List of participant email addresses. For new recommendations, the conrtibutor should be added here too. If a user wants to be added to an existing recommendation, add their email address to this array."
+                      }
+                    },
+                    "required": ["title", "type", "selfOrTogether", "contributor", "participants"]
+                  }
+                },
+                "required": ["item"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "scopes": {
+              "access_as_user": "access as user"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Google Calendar API",
+    "description": "Read, create, update, and delete events in a user's Google Calendar.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/calendar/v3",
+      "description": "Google Calendar API Server"
+    }
+  ],
+  "paths": {
+    "/calendars/{calendarId}/events": {
+      "get": {
+        "operationId": "listCalendarEvents",
+        "security": [
+          {
+            "OAuth2": ["https://www.googleapis.com/auth/calendar.events"]
+          }
+        ],
+        "summary": "Retrieve events from a calendar",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "description": "The calendar ID (use 'primary' for the user's primary calendar).",
+            "schema": {
+              "type": "string",
+              "example": "primary"
+            }
+          },
+          {
+            "name": "timeMin",
+            "in": "query",
+            "description": "Start time filter for events (ISO 8601 format).",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-02-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "timeMax",
+            "in": "query",
+            "description": "End time filter for events (ISO 8601 format).",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-02-07T23:59:59Z"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of events",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "summary": { "type": "string" },
+                          "start": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": { "type": "string", "format": "date-time" }
+                            }
+                          },
+                          "end": {
+                            "type": "object",
+                            "properties": {
+                              "dateTime": { "type": "string", "format": "date-time" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createCalendarEvent",
+        "security": [
+          {
+            "OAuth2": ["https://www.googleapis.com/auth/calendar.events"]
+          }
+        ],
+        "summary": "Create a new event",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "primary"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "summary": { "type": "string" },
+                  "description": { "type": "string" },
+                  "start": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": { "type": "string", "format": "date-time" }
+                    }
+                  },
+                  "end": {
+                    "type": "object",
+                    "properties": {
+                      "dateTime": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendars/{calendarId}/events/{eventId}": {
+      "get": {
+        "operationId": "getCalendarEventDetails",
+        "security": [
+          {
+            "OAuth2": ["https://www.googleapis.com/auth/calendar.events"]
+          }
+        ],
+        "summary": "Get details of a specific event",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "primary"
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abcd1234"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "summary": { "type": "string" },
+                    "description": { "type": "string" },
+                    "start": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": { "type": "string", "format": "date-time" }
+                      }
+                    },
+                    "end": {
+                      "type": "object",
+                      "properties": {
+                        "dateTime": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateCalendarEvent",
+        "security": [
+          {
+            "OAuth2": ["https://www.googleapis.com/auth/calendar.events"]
+          }
+        ],
+        "summary": "Update an existing event",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "primary"
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abcd1234"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteCalendarEvent",
+        "security": [
+          {
+            "OAuth2": ["https://www.googleapis.com/auth/calendar.events"]
+          }
+        ],
+        "summary": "Delete an event",
+        "parameters": [
+          {
+            "name": "calendarId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "primary"
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abcd1234"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+            "tokenUrl": "https://oauth2.googleapis.com/token",
+            "scopes": {
+              "https://www.googleapis.com/auth/calendar.events": "https://www.googleapis.com/auth/calendar.events"
+            }
+          }
+        }
+      }
+    }
+  }
+}

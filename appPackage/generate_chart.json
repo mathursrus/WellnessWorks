@@ -1,0 +1,12 @@
+{
+    "id": "generate_chart",
+    "description_for_human": "Generate a chart based on the provided data.",
+    "description_for_model": "Generate a chart based on the provided data.",
+    "namespace": "wellnessworks",
+    "functions": [
+        {
+            "name": "python_execution",
+            "description": "Generate a chart based on the provided data."
+        }
+    ]
+}

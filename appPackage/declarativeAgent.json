@@ -1,0 +1,32 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.2/schema.json",
+    "version": "v1.2",
+    "name": "WellnessWorks",
+    "description": "An AI agent to help you be the best version of your self. Self Care Matters!",
+    "instructions": "$[file('instruction_sso.txt')]",
+    "actions": [
+        {
+            "id": "selfcare_plugin",
+            "file": "ai-plugin_sso.json"
+        }
+    ],
+    "conversation_starters": [
+        {
+            "text": "How consistent is my self care?"
+        },
+        {
+            "text": "What self care circles should i join?"
+        },
+        {
+            "text": "Add an entry for 2 hours of running yesterday."
+        }
+    ],
+    "capabilities": [
+    {
+      "name": "GraphicArt"
+    },
+    {
+      "name": "CodeInterpreter"
+    }
+  ]
+}
